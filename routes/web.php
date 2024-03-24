@@ -6,6 +6,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\ZipController;
+use App\Http\Controllers\JsonAll;
 
 
 Route::get('/', function () {
@@ -19,7 +20,8 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     $imgs = \App\Models\Image::all();
-    $imgs = $imgs->toArray();
+    $imgs->toArray();
+
     return Inertia::render('Dashboard', compact('imgs'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -30,6 +32,9 @@ Route::get('/loadimg', function () {
 Route::post('/storeimg', [ImgController::class, 'upload']);
 
 Route::get('/zip/{img_name}', [ZipController::class, 'zipped']);
+
+Route::get('/json', [JsonAll::class, 'index' ])->name('json');
+Route::get('/json/{id}', [JsonAll::class, 'getFileById' ]);
 
 
 Route::middleware('auth')->group(function () {

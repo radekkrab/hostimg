@@ -17,5 +17,6 @@ class ZipController extends Controller
         $zip->open('archive.zip', ZipArchive::CREATE);
         $zip->addFile($path, $img_name);
         $zip->close();
+        return response()->download('archive.zip')->deleteFileAfterSend(true);
     }
 }
